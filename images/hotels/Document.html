@@ -1,0 +1,177 @@
+
+<!-- saved from url=(0053)http://localhost/CSD3202-WorkShop/Project/booking.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>all<pre>Array
+(
+    [room-card-1] =&gt; Array
+        (
+            [name] =&gt; Deluxe Room
+            [price] =&gt; 2500.00
+            [detail] =&gt; 5 คน
+            [img] =&gt; images/rooms/room1.png
+        )
+
+    [room-card-2] =&gt; Array
+        (
+            [name] =&gt; Superior Room
+            [price] =&gt; 2200.00
+            [detail] =&gt; 3 คน
+            [img] =&gt; images/rooms/room2.png
+        )
+
+    [room-card-3] =&gt; Array
+        (
+            [name] =&gt; Family Suite
+            [price] =&gt; 3500.00
+            [detail] =&gt; 4 คน
+            [img] =&gt; images/rooms/room3.png
+        )
+
+    [room-card-4] =&gt; Array
+        (
+            [name] =&gt; Pool Villa
+            [price] =&gt; 4800.00
+            [detail] =&gt; 6 คน
+            [img] =&gt; images/rooms/room4.png
+        )
+
+)
+</pre>
+
+
+
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Document_files/Global.css">
+    <link rel="stylesheet" href="./Document_files/Navbar.css">
+    <link rel="stylesheet" href="./Document_files/Footer.css">
+
+    <link rel="stylesheet" href="./Document_files/booking.css">
+
+
+
+    <section id="home"></section>
+    <div class="container">
+        <header>
+            <div class="Navbar" id="mainNav">
+                <div class="nav-left">
+                    <h1 class="text_logo" style="color: #FF7500;">
+                        Test Hotel                    </h1>
+                </div>
+                <div class="nav-middle">
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#home">Home</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#services">Services</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#about">About Us</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#rooms">Rooms</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#contact">Contact</a>
+                </div>
+                <div class="nav-right">
+                    <a class="book-now" style="background-color: #FF7500;" href="http://localhost/CSD3202-WorkShop/Project/booking.php">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Navbar clone ที่จะปรากฏเมื่อ scroll -->
+            <div class="Navbar fixedNav show" id="fixedNav">
+                <div class="nav-left">
+                    <h1 class="text_logo" style="color: #FF7500;">
+                        Test Hotel                    </h1>
+                </div>
+                <div class="nav-middle">
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#home">Home</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#services">Services</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#about">About Us</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#rooms">Rooms</a>
+                    <a href="http://localhost/CSD3202-WorkShop/Project/booking.php#contact">Contact</a>
+                </div>
+                <div class="nav-right">
+                    <a class="book-now" style="background-color: #FF7500;" href="http://localhost/CSD3202-WorkShop/Project/booking.php">Book Now</a>
+                </div>
+            </div>
+        </header>
+    </div>
+    <hero>
+        <img class="hero-image" src="./Document_files/hero-image.png" style="width: 100%; height: 544px; object-fit: cover;" alt="">
+    </hero>
+
+    <div class="container">
+        <div class="grid-container">
+            <div class="grid-item item-1" data-img="images/hotels/1.jpg">
+                <img src="./Document_files/1.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-2" data-img="images/hotels/2.jpg">
+                <img src="./Document_files/2.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-3" data-img="images/hotels/3.jpg">
+                <img src="./Document_files/3.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-4" data-img="images/hotels/4.jpg">
+                <img src="./Document_files/4.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-5" data-img="images/hotels/5.jpg">
+                <img src="./Document_files/5.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-6" data-img="images/hotels/6.jpg">
+                <img src="./Document_files/6.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+            <div class="grid-item item-7" data-img="images/hotels/7.jpg">
+                <img src="./Document_files/7.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+            </div>
+        </div>
+        <!-- 🔹 กล่อง popup แสดงรูป -->
+        <div class="modal" id="modal">
+            <img id="modal-img" src="http://localhost/CSD3202-WorkShop/Project/booking.php" alt="Preview">
+        </div>
+
+        <hr>
+        <main>
+            <label for="booking-form">ประเภทห้อง</label>
+            <form id="booking-form" action="http://localhost/CSD3202-WorkShop/Project/booking.php" method="post">
+                <select name="room-type" id="room-type">
+                    <option value="all" selected="">ทั้งหมด</option>
+                    <option value="single">ห้องเดี่ยว</option>
+                    <option value="double">ห้องคู่</option>
+                    <option value="group">ห้องหมู่</option>
+                    <option value="suite">ห้องสวีท</option>
+                </select>
+                <button type="submit">ค้นหา</button>
+            </form>
+
+            <div class="rooms">
+                <div class="card-booking-room">
+                    <img src="./Document_files/246x184.png" alt="">
+                    <div class="card-booking-room-detail">
+                        <h3>Room Name</h3>
+                        <p>Room Detail</p>
+                        <p>Room Detail</p>
+                        <p>Room Detail</p>
+                        <p>Price: 999 THB/Night</p>
+                        <button style="background-color: #FF7500;">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <section id="rooms"></section><div class="rooms"><div class="card-booking-room"><img src="./Document_files/room1.png" alt=""><div class="card-booking-room-detail"><h3>Deluxe Room</h3><p>5 คน</p><p>Price: 2,500 THB/Night</p><button style="background-color: #FF7500;">Book Now</button></div></div><div class="card-booking-room"><img src="./Document_files/room2.png" alt=""><div class="card-booking-room-detail"><h3>Superior Room</h3><p>3 คน</p><p>Price: 2,200 THB/Night</p><button style="background-color: #FF7500;">Book Now</button></div></div><div class="card-booking-room"><img src="./Document_files/room3.png" alt=""><div class="card-booking-room-detail"><h3>Family Suite</h3><p>4 คน</p><p>Price: 3,500 THB/Night</p><button style="background-color: #FF7500;">Book Now</button></div></div><div class="card-booking-room"><img src="./Document_files/room4.png" alt=""><div class="card-booking-room-detail"><h3>Pool Villa</h3><p>6 คน</p><p>Price: 4,800 THB/Night</p><button style="background-color: #FF7500;">Book Now</button></div></div></div>        </main>
+    </div>
+    <section id="contact"></section>
+    <footer style="background-color: #F6EBC8;">
+        <p>© 2023 CSD3202-WorkShop. All rights reserved.</p>
+    </footer>
+    <script src="./Document_files/script.js.download"></script>
+    <script>
+    // เมื่อคลิกรูปใน grid
+    document.querySelectorAll('.grid-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const imgSrc = item.getAttribute('data-img');
+        document.getElementById('modal-img').src = imgSrc;
+        document.getElementById('modal').style.display = 'flex';
+    });
+    });
+
+    // คลิกที่พื้นหลังเพื่อปิด
+    document.getElementById('modal').addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+    });
+    </script>
+
+
+</body></html>
