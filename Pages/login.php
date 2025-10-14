@@ -1,29 +1,14 @@
 <?php
     session_start();
-
     include '../configs/Connect_DB.php';
-    include '../configs/hotelTheme.php';
+    include '../configs/basefile.php'; //-- baseUrl, basePath
 
-    function userLogin($conn, $userName, $password) {
-        $stmt = $conn->prepare("SELECT password_hash, role FROM users WHERE userName = ?");
-        $stmt->execute([$userName]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    include '../functions/HotelTheme.php';
+    $hotelTheme = getHotelTheme($conn);
 
-        $error = [];
-        if (!$user || !password_verify($password, $user['password_hash'])) {
-            $error[] = "Invalid username or password.";
-        }
-  
-        if (!empty($error)) {
-            return $error;
-        }
-        return true;
-    }
-    function getUserIdByUserName($conn, $userName) {
-        $stmt = $conn->prepare("SELECT userId, role FROM users WHERE userName = ?");
-        $stmt->execute([$userName]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    include '../functions/getUsers.php';
+    include '../functions/validateAccount.php';
 
 ?>
 <!DOCTYPE html>
@@ -43,14 +28,14 @@
     <!-- Navbar -->
     <nav  class="d-flex flex-column justify-content-center container py-3 align-items-center border my-3" style="border-radius: 10px;">
         <div class="nav-left">
-            <p class="h2 text-decoration-none" style="white-space: nowrap; display: inline-block; color: <?php echo $hotel_color_primary; ?>;"><?php echo $hotel_name; ?></p>
+            <p class="h2 text-decoration-none" style="white-space: nowrap; display: inline-block; color: <?php echo $hotelTheme['colorPrimary']; ?>;"><?php echo $hotelTheme['hotelName']; ?></p>
         </div>
         <?php include '../components/NavServices.php'; ?>
     </nav>
     <!-- End Navbar -->
     <div class="container border p-4 my-5" style="border-radius: 10px;" id="login">
         <h2 class="text-center mb-4" 
-            style="font-size: 2rem; font-weight: bold; color: <?php echo $hotel_color_primary; ?>;">
+            style="font-size: 2rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">
             Login
         </h2>
         <?php
@@ -64,12 +49,8 @@
                     $user = getUserIdByUserName($conn, $userName);
                     $_SESSION['userId'] = $user['userId'];
                     $_SESSION['role'] = $user['role'];
-
-                    if ($user['role'] === 'admin') {
-                        header("Refresh: 1; url=adminpage.php");
-                    } else {
-                        header("Refresh: 1; url=homepage.php");
-                    }
+                    header("Refresh: 1; url=homepage.php");
+                    
                 } elseif (is_array($result)) {
                     foreach ($result as $error) {
                         echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($error) . '</div>';
@@ -81,8 +62,6 @@
         ?>
 
         <form action="login.php" method="POST">
-            
-            
             <div class="mb-3">
                 <label for="userName" class="form-label">User Name</label>
                 <input type="text" class="form-control" id="userName" name="userName" required
@@ -94,11 +73,11 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
-            <p>Don't have an account? <a href="register.php" class="text-decoration-none fw-semibold" style="color: <?php echo $hotel_color_primary; ?>;">Register</a></p>
+            <p>Don't have an account? <a href="register.php" class="text-decoration-none fw-semibold" style="color: <?php echo $hotelTheme['colorPrimary']; ?>;">Register</a></p>
             
             <div class="text-center">
                 <button type="submit" class="btn btn-primary px-5 py-2 w-100"
-                    style="background-color: <?php echo $hotel_color_primary; ?>; border: none; border-radius: 8px;">
+                    style="background-color: <?php echo $hotelTheme['colorPrimary']; ?>; border: none; border-radius: 8px;">
                     Login
                 </button>
             </div>

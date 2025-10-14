@@ -1,30 +1,24 @@
 <?php
     session_start();
+    include '../configs/basefile.php'; //-- baseUrl, basePath
+
+    // เช็คว่า user login แล้วหรือยัง
     if (!isset($_SESSION['userId']) || empty($_SESSION['role'])) {
         header("Location: login.php");
         exit();
     }
+    // ---------------------------------------------------------------- //
+
     include '../configs/Connect_DB.php';
-    include '../configs/hotelTheme.php';
     
-    function getUserById($conn, $userId) {
-        $stmt = $conn->prepare("SELECT userName, email, role FROM users WHERE userId = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    include '../functions/HotelTheme.php';
+    $hotelTheme = getHotelTheme($conn);
+
+    include '../functions/getUsers.php';
     $user = getUserById($conn, $_SESSION['userId']);
 
-    function getRooms($conn) {
-        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice, roomsimages.rimgPath, roomsimages.rimgShow
-                                FROM rooms
-                                JOIN roomsimages ON rooms.roomId = roomsimages.roomId
-                                WHERE rimgShow = 1 AND rooms.roomId IN (1, 2, 3, 4)");
-
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result ? $result : null;
-    }
-    $rooms = getRooms($conn);
+    include '../functions/getRooms.php';
+    $rooms = getLIMITRoomsAndImagesShow($conn, 4);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,62 +45,39 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <?php include '../components/Navbar.php';?>
+    <!-- Nav -->
+    <?php include '../components/Navbar/Navbar.php';?>
     <?php include '../components/NavCarousel.php';?>
     <?php include '../components/NavServices.php';?>
-    <!-- End Navbar -->
+    <!-- End Nav -->
 
     <!-- Main Content -->
-    <section class="container my-5" id="about">
-        <div class="text-center w-75 mx-auto">
-            <div class="d-flex justify-content-center gap-3">
-                <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทำไมคุณถึง</h1>
-                <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotel_color_primary; ?>;">ควรพักกับเรา</h1>
+    <main class="container my-5 d-flex flex-column gap-5" >
+        <div>
+            <div class="text-center w-75 mx-auto mb-5" id="about">
+                <div class="d-flex justify-content-center gap-3">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทำไมคุณถึง</h1>
+                    <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">ควรพักกับเรา</h1>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
+            <?php include '../components/AboutUs.php';?>
         </div>
-        <div class="d-flex justify-content-between">
-            <div class="d-flex flex-column gap-4 align-items-center">
-                <div class="d-flex flex-column gap-2">
-                    <p class="d-flex align-items-center justify-content-center h4" style="width: 40px; height: 40px; background-color: <?php echo $hotel_color_primary; ?>; border-radius: 50%; color: #FFFFFF;">1</p>
-                    <div class="d-flex flex-column align-items-start text-start" style="max-width: 500px;">
-                        <h4>Lorem ipsum dolor sit amet.</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
-                    </div>
-                </div>
-                <div class="d-flex flex-column gap-2">
-                    <p class="d-flex align-items-center justify-content-center h4" style="width: 40px; height: 40px; background-color: <?php echo $hotel_color_primary; ?>; border-radius: 50%; color: #FFFFFF;">1</p>
-                    <div class="d-flex flex-column align-items-start text-start" style="max-width: 500px;">
-                        <h4>Lorem ipsum dolor sit amet.</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
-                    </div>
-                </div>
-                <div class="d-flex flex-column gap-2">
-                    <p class="d-flex align-items-center justify-content-center h4" style="width: 40px; height: 40px; background-color: <?php echo $hotel_color_primary; ?>; border-radius: 50%; color: #FFFFFF;">1</p>
-                    <div class="d-flex flex-column align-items-start text-start" style="max-width: 500px;">
-                        <h4>Lorem ipsum dolor sit amet.</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
-                    </div>
-                </div>
-            </div>
-            <img class="object-fit-cover border rounded" style="width: 45%; height: auto;" src="../images/example/570x416.png" alt="">
-        </div>
-    </section>
 
-    <main class="container my-5" id="rooms">
-        <div class="text-center w-75 mx-auto">
-            <h4>เพราะเราคือ</h4>
-            <div class="d-flex justify-content-center gap-3">
-                <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทางเลือก</h1>
-                <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotel_color_primary; ?>;">ที่ดีที่สุด</h1>
+        <div>
+            <div class="text-center w-75 mx-auto mb-5" id="rooms">
+                <h4>เพราะเราคือ</h4>
+                <div class="d-flex justify-content-center gap-3">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทางเลือก</h1>
+                    <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">ที่ดีที่สุด</h1>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
+            <?php include '../components/RoomCard.php';?>
         </div>
-        <?php include '../components/RoomCard.php';?>
+        <a href="rooms.php#rooms" class="text-decoration-none text-center"><span class="<?php echo $line_animation_CSS; ?>" style="color: <?php echo $hotelTheme['colorPrimary']; ?>;">ดูห้องพักทั้งหมด</span></a>
     </main>
     <!-- End Main Content -->
-
 
     <!-- Footer -->
     <?php include '../components/Footer.php';?>

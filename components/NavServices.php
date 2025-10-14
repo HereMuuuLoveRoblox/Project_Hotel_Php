@@ -1,65 +1,39 @@
+<?php
+$icons = [
+    '../images/Services/33x41.png',
+    '../images/Services/33x41.png',
+    '../images/Services/33x41.png',
+    '../images/Services/33x41.png',
+];
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    
-    <style>
-        .color-mask {
-            width: 40px;
-            height: 40px;
-            mask-size: contain;
-            -webkit-mask-size: contain;
-        }
-    </style>
-</head>
-<body>
-    <div class="container my-5 d-flex justify-content-around" id="services">
-       
+$Services = [
+    'Wi-Fi Free',
+    'Welcome Drink',
+    'Car Rental Service',
+    'Resort & Spa'
+];
+?>
 
-        <div class="d-flex align-items-center gap-3">
+<style>
+    .color-mask {
+        width: 40px;
+        height: 40px;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+    }
+</style>
+
+<div class="container my-5 d-flex justify-content-around flex-wrap" id="services">
+    <?php foreach ($Services as $index => $service): ?>
+        <div class="d-flex align-items-center gap-3 my-2">
             <div class="color-mask"
                 style="
-                    background-color: <?= $hotel_color_primary ?>;
-                    mask: url('../images/example/33x41.png') no-repeat center;
-                    -webkit-mask: url('../images/example/33x41.png') no-repeat center;
+                    background-color: <?= htmlspecialchars($hotelTheme['colorPrimary']); ?>;
+                    mask: url('<?= htmlspecialchars($icons[$index]); ?>') no-repeat center;
+                    -webkit-mask: url('<?= htmlspecialchars($icons[$index]); ?>') no-repeat center;
                 ">
             </div>
-            <p class="mb-0">Wi-Fi Free</p>
+            <p class="mb-0 fw-semibold"><?= htmlspecialchars($service); ?></p>
         </div>
-        <div class="d-flex align-items-center gap-3">
-            <div class="color-mask"
-                style="
-                    background-color: <?= $hotel_color_primary ?>;
-                    mask: url('../images/example/33x41.png') no-repeat center;
-                    -webkit-mask: url('../images/example/33x41.png') no-repeat center;
-                ">
-            </div>
-            <p class="mb-0">Welcome Drink</p>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <div class="color-mask"
-                style="
-                    background-color: <?= $hotel_color_primary ?>;
-                    mask: url('../images/example/33x41.png') no-repeat center;
-                    -webkit-mask: url('../images/example/33x41.png') no-repeat center;
-                ">
-            </div>
-            <p class="mb-0">Car Rental Service</p>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <div class="color-mask"
-                style="
-                    background-color: <?= $hotel_color_primary ?>;
-                    mask: url('../images/example/33x41.png') no-repeat center;
-                    -webkit-mask: url('../images/example/33x41.png') no-repeat center;
-                ">
-            </div>
-            <p class="mb-0">Resort & Spa</p>
-        </div>
-    </div>
-    
+    <?php endforeach; ?>
+</div>

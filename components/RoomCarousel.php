@@ -4,14 +4,13 @@
             <?php foreach ($roomImages as $index => $image): ?>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-current="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
             <?php endforeach; ?>
-        <?php endif; ?>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            <?php endif; ?>
     </div>
     <div class="carousel-inner">
         <?php if ($roomImages): ?>
             <?php foreach ($roomImages as $index => $image): ?>
                 <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                    <img src="../<?php echo $image['rimgPath']; ?>" class="d-block w-100" style="height: 300px; object-fit: cover; object-position: center;" alt="">
+                    <img src="../images/rooms/<?php echo $image['rimgPath']; ?>" class="d-block w-100" style="height: 300px; object-fit: cover; object-position: center;" alt="">
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
