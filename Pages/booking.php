@@ -1,54 +1,33 @@
 <?php
     session_start();
     include '../configs/Connect_DB.php';
-    include '../configs/hotelTheme.php';
+    include '../configs/basefile.php'; //-- baseUrl, basePath
+
     
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $checkin = $_POST['checkin'];
-        $checkout = $_POST['checkout'];
+    include '../functions/HotelTheme.php';
+    $hotelTheme = getHotelTheme($conn);
 
-        $date1 = new DateTime($checkin);
-        $date2 = new DateTime($checkout);
-        $nights = $date1->diff($date2)->days;
-    }
-
-    function getUserById($conn, $userId) {
-        $stmt = $conn->prepare("SELECT userName, email, role FROM users WHERE userId = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    include '../functions/getUsers.php';
     $user = getUserById($conn, $_SESSION['userId']);
 
-    function getRoomById($conn, $roomId) {
-        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice, roomsimages.rimgPath, roomsimages.rimgShow
-                                FROM rooms
-                                JOIN roomsimages ON rooms.roomId = roomsimages.roomId
-                                WHERE rooms.roomId = :roomId AND roomsimages.rimgShow = 1");
+    include '../functions/getRooms.php';
 
-        $stmt->bindParam(':roomId', $roomId);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result ? $result : null;
-    }
+    include '../functions/CRUDbooking.php';
 
-    function getRoomImageById($conn, $roomId) {
-        $stmt = $conn->prepare("SELECT roomsimages.rimgPath
-                                FROM roomsimages
-                                WHERE roomsimages.roomId = :roomId");
-        $stmt->bindParam(':roomId', $roomId);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result ? $result : null;
-    }
-
-    function getRoomServicesById($conn, $roomId) {
-        $stmt = $conn->prepare("SELECT roomservices.serviceName 
-                                FROM roomservices 
-                                WHERE roomservices.roomId = :roomId");
-        $stmt->bindParam(':roomId', $roomId);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result ? $result : null;
+    $nights = 0;
+    $total_price = 0;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['checkin']) && isset($_POST['checkout'])) {
+            $checkin = $_POST['checkin'];
+            $checkout = $_POST['checkout'];
+            $date1 = new DateTime($checkin);
+            $date2 = new DateTime($checkout);
+            $interval = $date1->diff($date2);
+            $nights = $interval->days;
+        }else{
+            echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน นะนะะนะน'); window.location.href = 'rooms.php';</script>";
+            exit();
+        }
     }
 
     if (isset($_GET['roomId'])) {
@@ -79,17 +58,22 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <?php include '../components/Navbar.php'; ?>
-    <?php include '../components/NavCarousel.php'; ?>
-    <section id="booking"></section>
-    <?php include '../components/NavServices.php'; ?>
-    <!-- End Navbar -->
+    <!-- Nav -->
+    <?php include '../components/Navbar/Navbar.php';?>
+    <?php include '../components/NavCarousel.php';?>
+    <?php include '../components/NavServices.php';?>
+    <!-- End Nav -->
+
     <!-- Main Content -->
     <div class="container my-5 d-flex justify-content-between">
+
+        <!-- Room Carousel -->
         <?php include '../components/RoomCarousel.php'; ?>
+        <!-- End Room Carousel -->
+
+        
         <div class="w-100 px-5">
-            <h1 class="d-flex justify-content-center align-items-center" style="font-size: 3rem; font-weight: bold; color: <?php echo $hotel_color_primary; ?>;"><?php echo $room[0]['roomName'] ?? ''; ?></h1>
+            <h1 class="d-flex justify-content-center align-items-center" style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;"><?php echo $room[0]['roomName'] ?? ''; ?></h1>
             <p class="text-center"><?php echo $room[0]['roomDetail'] ?? ''; ?></p>
             <div class="container border rounded p-3 my-5">
                 <h3 class="d-flex justify-content-center align-items-center mt-4" style="font-size: 1.5rem; font-weight: bold; color: gray;">สิ่งอำนวยความสะดวก</h3>
@@ -103,11 +87,7 @@
                     <?php endif; ?>
                 </ul>
                 <h3 class="d-flex justify-content-center align-items-center mt-4" style="font-size: 1.5rem; font-weight: bold; color: green;">$<?php echo number_format((float)$room[0]['roomPrice']); ?> / คืน</h3>
-                <hr>
-                <h3>ข้อมูลผู้เข้าพัก</h3>
-                <p><strong>ชื่อผู้ใช้:</strong> <?php echo $user['userName'] ?? ''; ?></p>
-                <p><strong>อีเมล:</strong> <?php echo $user['email'] ?? ''; ?></p>
-                <hr>
+                
                 <form method="post" action="">
                     <div class="mb-3">
                         <label>วันที่เริ่มเข้าพัก (Check-in)</label>
@@ -120,7 +100,7 @@
                             value="<?php echo $_POST['checkout'] ?? ''; ?>" required>
                     </div>
                     <div class="d-flex flex-column gap-2">
-                        <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="width: 100%; background-color: <?php echo $hotel_color_primary; ?>; color: white;">จองห้องพัก</button>
+                        <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="width: 100%; background-color: <?php echo $hotelTheme['colorPrimary']; ?>; color: white;">จองห้องพัก</button>
                     </div>
                 </form>
             </div>
@@ -159,8 +139,6 @@
             <?php endif; ?>
         });
     </script>
-
-
 
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

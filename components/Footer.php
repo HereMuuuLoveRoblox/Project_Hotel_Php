@@ -12,13 +12,13 @@
 </head>
 
 <body>
-    <footer class="" style="background-color: <?php echo $hotel_color_secondary; ?>;" id="contact">
+    <footer class="" style="background-color: <?php echo $hotelTheme['colorSecondary']; ?>;" id="contact">
         <div class="container py-5">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0">&copy; <?php echo date("Y"); ?> <?php echo $hotel_name; ?>. All rights reserved.</p>
+                <p class="mb-0">&copy; <?php echo date("Y"); ?> <?php echo $hotelTheme['hotelName']; ?>. All rights reserved.</p>
                 <ul class="list-unstyled d-flex mb-0">
-                    <li class="ms-3"><a href="" class="<?php echo $link_css; ?>">Privacy Policy</a></li>
-                    <li class="ms-3"><a href="" class="<?php echo $link_css; ?>">Terms of Service</a></li>
+                    <li class="ms-3"><a href="" class="<?php echo $line_animation_CSS; ?>">Privacy Policy</a></li>
+                    <li class="ms-3"><a href="" class="<?php echo $line_animation_CSS; ?>">Terms of Service</a></li>
                 </ul>
             </div>
         </div>
