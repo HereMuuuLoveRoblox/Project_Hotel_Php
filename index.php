@@ -6,7 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    eiei
     
+<?php
+    session_start();
+     // เช็คว่า user login แล้วหรือยัง
+    if (!isset($_SESSION['userId']) || empty($_SESSION['role'])) {
+        header("Location: Pages/login.php");
+        exit();
+    }else{
+        header("Location: Pages/homepage.php");
+    }
+?>
 </body>
 </html>
