@@ -3,7 +3,6 @@
     include '../configs/Connect_DB.php';
     include '../configs/basefile.php'; //-- baseUrl, basePath
 
-    
     include '../functions/HotelTheme.php';
     $hotelTheme = getHotelTheme($conn);
 

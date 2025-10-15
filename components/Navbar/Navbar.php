@@ -60,4 +60,4 @@
     <div id="fixedNav" class="fixedNav bg-white">
        <?php include 'Navbar-body.php'; ?>
     </div>
-    <script src="<?php echo getBaseFile(); ?>/js/Navbar.js"></script>
+    <script src="<?php echo url('js/Navbar.js'); ?>"></script>

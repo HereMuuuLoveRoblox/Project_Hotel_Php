@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
                     <td class="align-middle text-center"><?php echo $rimgId; ?></td>
                     <td class="align-middle text-center">
                         <img
-                            src="<?php echo getBaseFile(); ?>/images/rooms/<?php echo htmlspecialchars($img['rimgPath']); ?>"
+                            src="<?php echo url('/images/rooms/') . htmlspecialchars($img['rimgPath']); ?>"
                             alt="Room Image"
                             class="img-thumbnail"
                             style="max-width:200px; max-height:200px; object-fit:cover;">

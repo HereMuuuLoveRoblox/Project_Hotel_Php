@@ -1,6 +1,6 @@
 <nav class="d-flex justify-content-between container py-5 align-items-center" style="height: 50px;">
      <div class="nav-left">
-         <a href="<?php echo getBaseFile(); ?>/Pages/homepage.php" class="h2 text-decoration-none" style="white-space: nowrap; display: inline-block; color: <?php echo $hotelTheme['colorPrimary']; ?>;"><?php echo $hotelTheme['hotelName']; ?></a>
+         <a href="<?php echo url('Pages/homepage.php') ?>" class="h2 text-decoration-none" style="white-space: nowrap; display: inline-block; color: <?php echo $hotelTheme['colorPrimary']; ?>;"><?php echo $hotelTheme['hotelName']; ?></a>
      </div>
      <div class="nav-middle d-flex justify-content-around w-50">
          <a href="#services" class="<?php echo $line_animation_CSS; ?>">Services</a>
@@ -21,15 +21,15 @@
                 </li>
                 <?php
                     if ($user['role'] === 'admin') {
-                        echo "<li><a class='dropdown-item' href='" . getBaseFile() . "/Pages/Admin/Dashboard.php'>Dashboard</a></li>";
-                        echo "<li><a class='dropdown-item' href='" . getBaseFile() . "/Pages/Admin/manageUsers.php'>Manage Users</a></li>";
-                        echo "<li><a class='dropdown-item' href='" . getBaseFile() . "/Pages/Admin/manageRooms.php'>Manage Rooms</a></li>";
+                        echo "<li><a class='dropdown-item' href='" . url('Pages/Admin/Dashboard.php') . "'>Dashboard</a></li>";
+                        echo "<li><a class='dropdown-item' href='" . url('Pages/Admin/manageUsers.php') . "'>Manage Users</a></li>";
+                        echo "<li><a class='dropdown-item' href='" . url('Pages/Admin/manageRooms.php') . "'>Manage Rooms</a></li>";
                         echo '<li><hr class="dropdown-divider"></li>';
                     }
                 ?>
-                <li><a class="dropdown-item" href="<?php echo getBaseFile(); ?>/configs/logout.php">Logout</a></li>
+                <li><a class="dropdown-item" href="<?php echo url('configs/logout.php'); ?>">Logout</a></li>
              </ul>
          </div>
-         <a href="<?php echo getBaseFile(); ?>/Pages/rooms.php#rooms" class="btn" style="background-color: <?php echo $hotelTheme['colorPrimary']; ?>; color: white;">Book Now</a>
+         <a href="<?php echo url('Pages/rooms.php#rooms'); ?>" class="btn" style="background-color: <?php echo $hotelTheme['colorPrimary']; ?>; color: white;">Book Now</a>
      </div>
  </nav>
