@@ -10,7 +10,6 @@
             $roomPrice  = trim($_POST['roomPrice'] ?? '');
             $rimgId     = trim($_POST['rimgId'] ?? '');
 
-
             if ($roomName === '' || $roomDetail === '' || $roomPrice === '' || $rimgId === '') {
                 echo "<script>alert('กรุณากรอกข้อมูลห้องให้ครบ');</script>";
                 echo "<script>window.location.href = 'editRoom.php?roomId={$roomId}';</script>";
@@ -35,11 +34,17 @@
     <input type="hidden" name="action" value="update_room">
     <table class="table table-hover border-top-color table-light table-bordered">
         <thead>
+            <colgroup>
+                <col style="width:20%;"> <!-- ชื่อห้อง -->
+                <col style="width:55%;"> <!-- รายละเอียด -->
+                <col style="width:15%;"> <!-- ราคา -->
+                <col style="width:10%;"> <!-- รูปภาพหลัก -->
+            </colgroup>
             <tr>
                 <th scope="col">ชื่อห้อง</th>
                 <th scope="col">รายละเอียด</th>
                 <th scope="col">ราคา / คืน</th>
-                <th scope="col">id รูปภาพหลัก</th>
+                <th scope="col">ID รูปภาพหลัก</th>
             </tr>
         </thead>
         <tbody>
@@ -52,8 +57,8 @@
                     <td class="align-middle">
                         <textarea name="roomDetail" class="form-control autosize" required
                                 rows="1" style="overflow:hidden;resize:none;"><?php
-                            echo htmlspecialchars($room[0]['roomDetail']);?>
-                        </textarea>
+                            echo htmlspecialchars($room[0]['roomDetail']);
+                        ?></textarea>
                     </td>
                     <td class="align-middle h4">
                         <input type="number" step="0.01" name="roomPrice" class="form-control" required

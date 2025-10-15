@@ -71,10 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
 
 <table class="table table-hover table-light table-bordered">
     <thead>
+         <colgroup>
+            <col style="width:10%;"> <!-- ไอดีรูปภาพ -->
+            <col style="width:30%;"> <!-- รูปภาพ -->
+            <col style="width:40%;"> <!-- อัปโหลด -->
+        </colgroup>
         <tr>
-            <th class="text-center" style="width:10%">rimgId</th>
-            <th class="text-center" style="width:40%">img</th>
-            <th class="text-center" style="width:50%">upload</th>
+            <th class="text-center">ไอดีรูปภาพ</th>
+            <th class="text-center">รูปภาพ</th>
+            <th class="text-center">อัปโหลด</th>
         </tr>
     </thead>
     <tbody>
@@ -98,9 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
                             <div class="input-group d-flex gap-2">
                                 <input type="file" name="new_image" accept="image/*" class="form-control js-file" required>
                                 <button type="submit" name="action" value="upload_image" class="btn btn-primary js-upload"
-                                onclick="return confirm('แน่ใจหรือไม่ว่าจะอัปโหลดรูปนี้?');">Upload</button>
+                                onclick="return confirm('แน่ใจหรือไม่ว่าจะอัปโหลดรูปนี้?');">อัปโหลด</button>
                                 <button type="submit" name="action" value="delete_image" class="btn btn-danger" 
-                                    onclick="return confirm('แน่ใจหรือไม่ว่าจะลบรูปนี้?');" formnovalidate >Delete</button>
+                                    onclick="return confirm('แน่ใจหรือไม่ว่าจะลบรูปนี้?');" formnovalidate >ลบ</button>
                             </div>
                         </form>
                     </td>
@@ -108,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="3" class="text-center">No images found.</td>
+                <td colspan="3" class="text-center">ไม่มีรูปภาพ</td>
             </tr>
         <?php endif; ?>
 
@@ -118,9 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
                 <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="add_images">
                     <div class="input-group" id="add-image-group">
-                        <button type="submit" class="btn btn-success">Add new image(s)</button>
+                        <button type="submit" class="btn btn-outline-primary">+ เพิ่มรูปใหม่</button>
                     </div>
-                    <div class="form-text">เลือกได้หลายไฟล์ จะถูกเพิ่มเป็นรูปใหม่ของห้องนี้</div>
                 </form>
             </td>
         </tr>

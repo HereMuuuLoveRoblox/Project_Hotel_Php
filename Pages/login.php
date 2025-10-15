@@ -36,7 +36,7 @@
     <div class="container border p-4 my-5" style="border-radius: 10px;" id="login">
         <h2 class="text-center mb-4" 
             style="font-size: 2rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">
-            Login
+            เข้าสู่ระบบ
         </h2>
         <?php
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -73,12 +73,12 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
-            <p>Don't have an account? <a href="register.php" class="text-decoration-none fw-semibold" style="color: <?php echo $hotelTheme['colorPrimary']; ?>;">Register</a></p>
+            <p>ยังไม่มีบัญชีผู้ใช้? <a href="register.php" class="text-decoration-none fw-semibold" style="color: <?php echo $hotelTheme['colorPrimary']; ?>;">สมัครสมาชิก</a></p>
             
             <div class="text-center">
                 <button type="submit" class="btn btn-primary px-5 py-2 w-100"
                     style="background-color: <?php echo $hotelTheme['colorPrimary']; ?>; border: none; border-radius: 8px;">
-                    Login
+                    เข้าสู่ระบบ
                 </button>
             </div>
         </form>

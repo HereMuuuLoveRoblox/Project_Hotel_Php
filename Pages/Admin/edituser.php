@@ -70,36 +70,41 @@
         <h2 class="mt-4 mb-4">จัดการผู้ใช้ ID : <?php echo htmlspecialchars($edituser['userId']); ?> <?php echo htmlspecialchars($edituser['userName']); ?></h2>
         <table class="table table-hover border-top-color table-light table-bordered" style="table-layout:fixed; width:100%;">
             <thead>
+                <colgroup>
+                    <col style="width:30%;"> <!-- ชื่อผู้ใช้ -->
+                    <col style="width:30%;"> <!-- อีเมล -->
+                    <col style="width:10%;"> <!-- บทบาท -->
+                    <col style="width:10%;"> <!-- แก้ไข -->
+                </colgroup>
                 <tr>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th>ชื่อผู้ใช้</th>
+                    <th>อีเมล / Email</th>
+                    <th class="text-center">บทบาท / Role</th>
+                    <th class="text-center">แก้ไข</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ($edituser): ?>
                     <tr>
                         <form action="" method="post" class="">
-                            <td>
+                            <td class="text-center">
                                 <input type="text" name="edituserName" value="<?php echo htmlspecialchars($edituser['userName']); ?>" class="form-control">
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <input type="email" name="editemail" value="<?php echo htmlspecialchars($edituser['email']); ?>" class="form-control">
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <select name="editrole" class="form-select">
                                     <option value="admin" <?php if ($edituser['role'] === 'admin') echo 'selected'; ?>>Admin</option>
                                     <option value="customer" <?php if ($edituser['role'] === 'customer') echo 'selected'; ?>>Customer</option>
                                 </select>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <input type="hidden" name="edituserId" value="<?php echo htmlspecialchars($edituser['userId']); ?>">
                                 <button type="submit" class="btn btn-primary btm-sm" name="action" value="save"
                                     onclick="return confirm('ยืนยันที่จะบันทึกการเปลี่ยนแปลงผู้ใช้ ID: <?php echo $edituser['userId']; ?>?');">
-                                    Save
+                                    บันทึก
                                 </button>
-                                
                             </td>
                         </form>
                     </tr>

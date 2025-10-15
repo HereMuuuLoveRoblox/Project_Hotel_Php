@@ -19,6 +19,13 @@
 
     include '../functions/getRooms.php';
     $rooms = getLIMITRoomsAndImagesShow($conn, 4);
+
+    function limitCharacters($text, $limit) {
+        if (mb_strlen($text, 'UTF-8') > $limit) {
+            return mb_substr($text, 0, $limit, 'UTF-8') . '...'; // ตัดข้อความและใส่ ...
+        }
+        return $text;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

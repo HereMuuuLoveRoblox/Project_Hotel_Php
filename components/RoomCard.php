@@ -15,7 +15,7 @@
                         <!-- เนื้อหา -->
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title mb-2"><?php echo htmlspecialchars($room['roomName']); ?></h5>
-                            <p class="card-text flex-grow-1"><?php echo htmlspecialchars($room['roomDetail']); ?></p>
+                            <p class="card-text flex-grow-1"><?php echo htmlspecialchars(limitCharacters($room['roomDetail'], 100)); ?></p>
 
                             <!-- ราคา -->
                             <p class="card-text text-end fw-semibold mb-3">

@@ -37,8 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>window.location.href = 'manageRooms.php';</script>";
         exit();
     }
+    
 }
 
+function limitCharacters($text, $limit) {
+    if (mb_strlen($text, 'UTF-8') > $limit) {
+        return mb_substr($text, 0, $limit, 'UTF-8') . '...'; // ตัดข้อความและใส่ ...
+    }
+    return $text;
+}
 // ---------------------------------------------------------------- //
 ?>
 <!DOCTYPE html>
@@ -83,8 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <th scope="col" class="text-center">ชื่อห้อง</th>
                     <th scope="col" class="text-center">รายละเอียด</th>
                     <th scope="col" class="text-center">ราคา / คืน</th>
-                    <th scope="col" class="text-center">แก้ไข</th>
-                    <th scope="col" class="text-center">ลบ</th>
+                    <th scope="col" colspan="2" class="text-center">แก้ไข</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,20 +100,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <th class="align-middle text-center" scope="row"><?php echo htmlspecialchars($room['roomId']); ?></th>
                             <td class="align-middle"><img src="../../images/rooms/<?php echo htmlspecialchars($room['rimgPath']); ?>" alt="<?php echo htmlspecialchars($room['roomName']); ?>:ไม่มีรูปภาพ" class="img-thumbnail" style="max-width: 150px;"></td>
                             <td class="align-middle h4"><?php echo htmlspecialchars($room['roomName']); ?></td>
-                            <td class="align-middle"><?php echo htmlspecialchars($room['roomDetail']); ?></td>
-                            <td class="align-middle h4"><?php echo htmlspecialchars($room['roomPrice']); ?></td>
-                            <td class="align-middle"><a href="editRoom.php?roomId=<?php echo $room['roomId']; ?>" class="btn btn-primary">Edit</a></td>
+                            <td class="align-middle">
+                                <?php echo htmlspecialchars(limitCharacters($room['roomDetail'], 100)); ?>
+                            </td>
+                            <td class="align-middle h4 text-center"><?php echo htmlspecialchars($room['roomPrice']); ?></td>
+                            <td class="align-middle text-center"><a href="editRoom.php?roomId=<?php echo $room['roomId']; ?>" class="btn btn-primary">แก้ไข</a></td>
 
                             <form action="" method="POST" onsubmit="return confirm('ยืนยันลบห้องนี้? : <?php echo addslashes($room['roomName']); ?>')">
                                 <input type="hidden" name="action" value="delete_room">
                                 <input type="hidden" name="roomId" value="<?php echo $room['roomId']; ?>">
-                                <td class="align-middle"><button type="submit" class="btn btn-danger">Delete</button></td>
+                                <td class="align-middle text-center"><button type="submit" class="btn btn-danger">ลบ</button></td>
                             </form>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" class="text-center">No rooms found.</td>
+                        <td colspan="5" class="text-center">ไม่มีห้องพัก</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -116,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td colspan="7" class="text-center">
                         <form action="" method="post">
                             <input type="hidden" name="action" value="create_room">
-                            <button type="submit" class="btn btn-success">+ Add New Room</button>
+                            <button type="submit" class="btn btn-outline-primary">+ เพิ่มห้องใหม่</button>
                         </form>
                     </td>
                 </tr>

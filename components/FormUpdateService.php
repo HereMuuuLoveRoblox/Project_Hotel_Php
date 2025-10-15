@@ -31,9 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <table class="table table-hover border-top-color table-light table-bordered">
         <thead>
+            <colgroup>
+                <col style="width:90%;"> <!-- ชื่อห้อง -->
+                <col style="width:10%;"> <!-- รายละเอียด -->
+                
+            </colgroup>
             <tr>
                 <th>ชื่อบริการ</th>
-                <th style="width: 120px;">จัดการ</th>
+                <th class="text-center">จัดการ</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" name="serviceName[]" class="form-control"
                                 value="<?php echo htmlspecialchars($service['serviceName']); ?>">
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle text-center">
                             <!-- ปุ่มลบเรียก JS ใส่ hidden แล้ว submit ฟอร์มหลัก -->
                             <button type="button" class="btn btn-danger btn-sm"
                                 onclick="submitDelete(<?php echo (int)$service['serviceId']; ?>, '<?php echo addslashes($service['serviceName']); ?>')">

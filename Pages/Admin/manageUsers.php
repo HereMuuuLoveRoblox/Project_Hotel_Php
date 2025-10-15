@@ -57,32 +57,38 @@
         <h2 class="mt-4 mb-4">จัดการผู้ใช้</h2>
         <table class="table table-hover border-top-color table-light table-bordered" style="table-layout:fixed; width:100%;">
             <colgroup>
-                <col style="width:80px;"> <!-- roomId -->
-                
+                <col style="width:10%"> <!-- ไอดีผู้ใช้ -->
+                <col style="width:25%"> <!-- ชื่อผู้ใช้ -->
+                <col style="width:25%"> <!-- อีเมล -->
+                <col style="width:10%"> <!-- บทบาท -->
+                <col style="width:10%"> <!-- จัดการ -->
+                <col style="width:10%"> <!-- จัดการ -->
             </colgroup>
             <thead>
                 <tr>
-                    <th>UserId</th>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>จัดการ</th>
+                    <th class="text-center">ไอดีผู้ใช้</th>
+                    <th>ชื่อผู้ใช้</th>
+                    <th>อีเมล / Email</th>
+                    <th class="text-center">บทบาท / Role</th>
+                     <th scope="col" colspan="2" class="text-center">แก้ไข</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($allUsers as $u): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($u['userId']); ?></td>
+                    <tr <?php if ($u['role'] === 'admin') echo 'class="table-warning"'; ?>>
+                        <td class="text-center"><?php echo htmlspecialchars($u['userId']); ?></td>
                         <td><?php echo htmlspecialchars($u['userName']); ?></td>
                         <td><?php echo htmlspecialchars($u['email']); ?></td>
-                        <td><?php echo htmlspecialchars($u['role']); ?></td>
-                        <td>
-                            <form action="" method="post">
+                        <td class="text-center"><?php echo htmlspecialchars($u['role']); ?></td>
+                        <form action="" method="post">
+                            <td class="text-center">
                                 <input type="hidden" name="userId" value="<?php echo $u['userId']; ?>">
-                                <a href="edituser.php?userId=<?php echo $u['userId']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                <button type="submit" class="btn btn-danger btn-sm" name="action" value="delete" onclick="return confirm('ยืนยันที่จะลบผู้ใช้ ID: <?php echo $u['userId']; ?>');">Delete</button>
-                            </form>
-                        </td>
+                                <a href="edituser.php?userId=<?php echo $u['userId']; ?>" class="btn btn-primary btn-sm">แก้ไข</a>
+                            </td>
+                            <td class="text-center">
+                                <button type="submit" class="btn btn-danger btn-sm" name="action" value="delete" onclick="return confirm('ยืนยันที่จะลบผู้ใช้ ID: <?php echo $u['userId']; ?>');">ลบ</button>
+                            </td>
+                        </form>
                     </tr>
                 <?php endforeach; ?>
                 

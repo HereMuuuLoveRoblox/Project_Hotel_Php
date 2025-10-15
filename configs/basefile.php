@@ -1,10 +1,10 @@
 <?php
 
-    $baseFile = '/CSD3202-WorkShop/Project';
+    $baseFile = dirname(__DIR__);
 
     function getBaseFile(){
         global $baseFile;
-        return $baseFile;
+        return (string)$baseFile;
     }
 
 ?>
