@@ -86,7 +86,7 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </ul>
-                <h3 class="d-flex justify-content-center align-items-center mt-4" style="font-size: 1.5rem; font-weight: bold; color: green;">$<?php echo number_format((float)$room[0]['roomPrice'], 2); ?> / คืน</h3>
+                <h3 class="d-flex justify-content-center align-items-center mt-4" style="font-size: 1.5rem; font-weight: bold; color: green;">THB <?php echo number_format((float)$room[0]['roomPrice'], 2); ?> / คืน</h3>
                 
                 <form method="post" action="">
                     <div class="mb-3">

@@ -66,7 +66,7 @@
                     <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทำไมคุณถึง</h1>
                     <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">ควรพักกับเรา</h1>
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
+                <p>เราเชื่อว่าการเดินทางที่ดีเริ่มต้นจากที่พักที่อบอุ่นและสะดวกสบาย เราใส่ใจทุกรายละเอียดเพื่อให้คุณได้พักผ่อนอย่างเต็มที่ ไม่ว่าจะมาคนเดียว มาคู่ หรือมาเป็นกลุ่ม พร้อมบริการที่เป็นกันเองและราคาที่คุ้มค่า</p>
             </div>
             <?php include '../components/AboutUs.php';?>
         </div>
@@ -78,7 +78,7 @@
                     <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ทางเลือก</h1>
                     <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">ที่ดีที่สุด</h1>
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
+                <p>เราพร้อมมอบประสบการณ์การพักผ่อนที่เหนือกว่า ด้วยห้องพักสะอาด สะดวกสบาย และราคาที่คุ้มค่า พร้อมบริการที่อบอุ่นจากใจ ไม่ว่าคุณจะเดินทางเพื่อพักผ่อนหรือทำงาน เราคือคำตอบของที่พักที่ดีที่สุดสำหรับคุณ</p>
             </div>
             <?php include '../components/RoomCard.php';?>
         </div>

@@ -1,10 +1,14 @@
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="width: 60%; height: 300px; overflow: hidden; border-radius: 10px;">
+    <?php if (!$roomImages): ?>
+        <img src="https://placehold.co/500x300" alt="">
+    <?php endif; ?>
+
     <div class="carousel-indicators">
         <?php if ($roomImages): ?>
             <?php foreach ($roomImages as $index => $image): ?>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-current="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
             <?php endforeach; ?>
-            <?php endif; ?>
+        <?php endif; ?>
     </div>
     <div class="carousel-inner">
         <?php if ($roomImages): ?>

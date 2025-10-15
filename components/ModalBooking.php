@@ -16,14 +16,21 @@
                         $error = false; ?>
                         
                         <div class="d-flex justify-content-between align-items-center">
+                            <?php if (!$room[0]['rimgPath']): ?>
+                                <img src="https://placehold.co/200x200" alt=""
+                                    class="rounded shadow"
+                                    alt="<?= htmlspecialchars($room[0]['roomName']); ?>"
+                                    style="width: 200px; height: 200px; object-fit: cover;">
+                            <?php else: ?>
                             <img src="../images/rooms/<?= htmlspecialchars($room[0]['rimgPath']); ?>"
                                  class="rounded shadow"
                                  alt="<?= htmlspecialchars($room[0]['roomName']); ?>"
                                  style="width: 200px; height: 200px; object-fit: cover;">
+                            <?php endif; ?>
                             <div class="justify-content-start w-100 mx-3">
                                 <p class="h3 mb-1"><?= htmlspecialchars($room[0]['roomName']); ?></p>
                                 <p class="mb-2"><?= htmlspecialchars($room[0]['roomDetail']); ?></p>
-                                <p>ราคา: $<?= number_format((float)$room[0]['roomPrice'], 2); ?> / คืน</p>
+                                <p>ราคา: <?= number_format((float)$room[0]['roomPrice'], 2); ?> / คืน</p>
                             </div>
                         </div>
 
@@ -34,7 +41,7 @@
                         <p>วันที่เช็คอิน: <?= htmlspecialchars($checkin); ?></p>
                         <p>วันที่เช็คเอาท์: <?= htmlspecialchars($checkout); ?></p>
                         <p>จำนวนคืน: <?= htmlspecialchars($nights); ?></p>
-                        <p>ราคารวม: $<?= number_format((float)$total_price, 2); ?></p>
+                        <p>ราคารวม: <?= number_format((float)$total_price, 2); ?></p>
 
                         <img src="../images/example/qrcode.png"
                             alt="QR Code สำหรับการชำระเงิน"

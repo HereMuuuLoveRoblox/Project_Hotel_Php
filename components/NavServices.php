@@ -1,9 +1,9 @@
 <?php
 $icons = [
-    '../images/Services/33x41.png',
-    '../images/Services/33x41.png',
-    '../images/Services/33x41.png',
-    '../images/Services/33x41.png',
+    '../images/Services/wifi.png',
+    '../images/Services/coffee.png',
+    '../images/Services/car.png',
+    '../images/Services/spa.png',
 ];
 
 $Services = [

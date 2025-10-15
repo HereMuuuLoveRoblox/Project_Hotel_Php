@@ -3,9 +3,9 @@
          <a href="<?php echo url('Pages/homepage.php') ?>" class="h2 text-decoration-none" style="white-space: nowrap; display: inline-block; color: <?php echo $hotelTheme['colorPrimary']; ?>;"><?php echo $hotelTheme['hotelName']; ?></a>
      </div>
      <div class="nav-middle d-flex justify-content-around w-50">
-         <a href="#services" class="<?php echo $line_animation_CSS; ?>">Services</a>
-         <a href="#about" class="<?php echo $line_animation_CSS; ?>">About Us</a>
-         <a href="#rooms" class="<?php echo $line_animation_CSS; ?>">Rooms</a>
+            <a href="<?php echo url('Pages/homepage.php#services') ?>" class="<?php echo $line_animation_CSS; ?>">Services</a>
+            <a href="<?php echo url('Pages/homepage.php#about') ?>" class="<?php echo $line_animation_CSS; ?>">About Us</a>
+            <a href="<?php echo url('Pages/homepage.php#rooms') ?>" class="<?php echo $line_animation_CSS; ?>">Rooms</a>
      </div>
      <div class="nav-right d-flex align-items-center gap-3">
          <div class="dropdown">

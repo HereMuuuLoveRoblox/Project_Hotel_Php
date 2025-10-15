@@ -1,8 +1,8 @@
 
 <?php
-    $Carousel_Image_1 = '../images/Carousel/1.png';
-    $Carousel_Image_2 = '../images/Carousel/1.png';
-    $Carousel_Image_3 = '../images/Carousel/1.png';
+    $Carousel_Image_1 = '../images/Carousel/C1.png';
+    $Carousel_Image_2 = '../images/Carousel/C2.jpg';
+    $Carousel_Image_3 = '../images/Carousel/C3.jpg';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,14 +19,14 @@
 <Carousel id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
     
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="<?php echo $Carousel_Image_1; ?>" class="d-block w-100" alt="...">
+    <div class="carousel-item active" style="height: 500px;">
+      <img src="<?php echo $Carousel_Image_1; ?>" class="d-block w-100 object-fit-cover h-100" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src="<?php echo $Carousel_Image_2; ?>" class="d-block w-100" alt="...">
+    <div class="carousel-item" style="height: 500px;">
+      <img src="<?php echo $Carousel_Image_2; ?>" class="d-block w-100 object-fit-cover h-100" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src="<?php echo $Carousel_Image_3; ?>" class="d-block w-100" alt="...">
+    <div class="carousel-item" style="height: 500px;">
+      <img src="<?php echo $Carousel_Image_3; ?>" class="d-block w-100 object-fit-cover h-100" alt="...">
     </div>
   </div>
 </Carousel>

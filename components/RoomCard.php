@@ -5,13 +5,22 @@
             <?php foreach ($rooms as $room): ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 room-card" style="width:100%;">
-                        <!-- รูปภาพ -->
-                        <div class="card-img-top" style="overflow:hidden; height:200px;">
-                            <img src="../images/rooms/<?php echo htmlspecialchars($room['rimgPath']); ?>"
-                                alt="<?php echo htmlspecialchars($room['roomName']); ?>"
-                                style="width:100%; height:100%; object-fit:cover;">
-                        </div>
 
+                        <?php if (!empty($room['rimgPath'])): ?>
+
+                            <!-- รูปภาพ -->
+                            <div class="card-img-top" style="overflow:hidden; height:200px;">
+                                <img src="../images/rooms/<?php echo htmlspecialchars($room['rimgPath']); ?>"
+                                    alt="<?php echo htmlspecialchars($room['roomName']); ?>"
+                                    style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                        <?php else: ?>
+                            <div class="card-img-top" style="overflow:hidden; height:200px;">
+                                <img src="https://placehold.co/280x200"
+                                    alt="<?php echo htmlspecialchars($room['roomName']); ?>"
+                                    style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                        <?php endif; ?>
                         <!-- เนื้อหา -->
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title mb-2"><?php echo htmlspecialchars($room['roomName']); ?></h5>
