@@ -67,7 +67,10 @@
     <!-- End Navbar -->
     <!-- Main Content -->
     <div class="container">
-        <h2 class="mt-4 mb-4">จัดการผู้ใช้ ID : <?php echo htmlspecialchars($edituser['userId']); ?> <?php echo htmlspecialchars($edituser['userName']); ?></h2>
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h2>จัดการผู้ใช้ ID : <?php echo htmlspecialchars($edituser['userId']); ?> <?php echo htmlspecialchars($edituser['userName']); ?></h2>
+            <a href="edituser.php" class="btn btn-outline-danger">กลับ</a>
+        </div>
         <table class="table table-hover border-top-color table-light table-bordered" style="table-layout:fixed; width:100%;">
             <thead>
                 <colgroup>
@@ -80,7 +83,7 @@
                     <th>ชื่อผู้ใช้</th>
                     <th>อีเมล / Email</th>
                     <th class="text-center">บทบาท / Role</th>
-                    <th class="text-center">แก้ไข</th>
+                    <th class="text-center">จัดการ</th>
                 </tr>
             </thead>
             <tbody>

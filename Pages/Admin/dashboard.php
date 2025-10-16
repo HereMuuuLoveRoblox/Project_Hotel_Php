@@ -1,24 +1,48 @@
 <?php
-    session_start();
-    include '../../configs/Connect_DB.php'; // เชื่อมต่อฐานข้อมูล
-    include '../../configs/basefile.php'; //-- baseUrl, basePath
+session_start();
+include '../../configs/Connect_DB.php'; // เชื่อมต่อฐานข้อมูล
+include '../../configs/basefile.php'; //-- baseUrl, basePath
 
-    //-- ถ้าไม่ใช่ admin → กลับไปหน้า login
-    if (!isset($_SESSION['userId']) || $_SESSION['role'] !== 'admin') {
-        header("Location: ../login.php");
-        exit();
+//-- ถ้าไม่ใช่ admin → กลับไปหน้า login
+if (!isset($_SESSION['userId']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+    exit();
+}
+include '../../functions/hotelTheme.php'; //-- ข้อมูลโรงแรม
+$hotelTheme = getHotelTheme($conn);
+
+include '../../functions/getUsers.php'; //-- ข้อมูลผู้ใช้
+$user = getUserById($conn, $_SESSION['userId']);
+
+include '../../functions/getBookings.php'; //-- ข้อมูลการจอง
+$bookings = getAllBookingsDashboard($conn);
+
+$statusCounts = getStatusCountAllRooms($conn);
+
+include '../../functions/CRUDbooking.php'; //-- CRUD Booking
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && isset($_POST['bookingId'])) {
+
+    $action = $_POST['action'] ?? '';
+    if ($action == 'delete') {
+        $bookingId = $_POST['bookingId'];
+        echo $bookingId;
+        if ($bookingId) {
+            DeleteBookingById($conn, $bookingId);
+            header("Location: dashboard.php");
+            exit();
+        }
     }
-    include '../../functions/hotelTheme.php'; //-- ข้อมูลโรงแรม
-    $hotelTheme = getHotelTheme($conn);
+    if ($action == 'edit') {
+        $bookingId = $_POST['bookingId'];
+        if ($bookingId) {
+            header("Location: editBooking.php?bookingId=" . urlencode($bookingId));
+            exit();
+        }
+    }
+}
 
-    include '../../functions/getUsers.php'; //-- ข้อมูลผู้ใช้
-    $user = getUserById($conn, $_SESSION['userId']);
-
-    include '../../functions/getBookings.php'; //-- ข้อมูลการจอง
-    $bookings = getAllBookings($conn);
-    
-    // ---------------------------------------------------------------- //
-
+// ---------------------------------------------------------------- //
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,9 +53,34 @@
     <title>Manage Users</title>
 
     <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-        
+        .table-custom thead {
+            background-color: #f8f9fa;
+        }
+
+        .table-custom th {
+            color: #212529;
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-custom td {
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f5ff !important;
+            transition: background-color 0.2s ease;
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            padding: 0.5em 0.75em;
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 
@@ -42,69 +91,69 @@
     <!-- Main Content -->
     <div class="container">
         <?php if ($bookings): ?>
-            <div class="d-flex justify-content-start align-items-center mt-4 mb-4 gap-3">
-                <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">จำนวนการจอง</div>
-                    <div class="card-body">
-                        
-                        <p class="card-text"><?php echo count($bookings); ?> รายการ</p>
-                    </div>
-                </div>
-                <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">ยอดรวมรายได้ทั้งหมด</div>
-                    <div class="card-body">
-                        <p class="card-text"><?php echo array_sum(array_column($bookings, 'totalPrice')); ?> บาท</p>
-                    </div>
-                </div>
-                <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">จำนวนผู้ใช้</div>
-                    <div class="card-body">
-                        <p class="card-text"><?php echo count(array_unique(array_column($bookings, 'userId'))); ?> คน</p>
-                    </div>
-                </div>
-            </div>
-            
+            <?php include '../../components/CardDashboard.php'; ?>
             <h1 class="mt-4 mb-4">ข้อมูลการจอง</h1>
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
+            <table class="table table-bordered table-hover table-striped rounded shadow-sm table-light">
+                <thead class="">
+                    <colgroup>
+                        <col style="width:5%;"> <!-- bookingId -->
+                        <col style="width:13%;"> <!-- ชื่อห้อง -->
+                        <col style="width:10%;"> <!-- ผู้จอง -->
+                        <col style="width:15%;"> <!-- วันที่จอง -->
+                        <col style="width:10%;"> <!-- เช็คอิน -->
+                        <col style="width:10%;"> <!-- เช็คเอาท์ -->
+                        <col style="width:7%;"> <!-- จำนวนคืน -->
+                        <col style="width:10%;"> <!-- ราคารวม -->
+                        <col style="width:10%;"> <!-- สถานะ -->
+                        <col style="width:10%;"> <!-- จัดการ -->
+                    </colgroup>
                     <tr>
-                        <th scope="col">bookingId</th>
+                        <th scope="col" class="text-center">ไอดี</th>
                         <th scope="col">ชื่อห้อง</th>
                         <th scope="col">ผู้จอง</th>
-                        <th scope="col">วันที่จอง</th>
-                        <th scope="col">วันที่เช็คอิน</th>
-                        <th scope="col">วันที่เช็คเอาท์</th>
-                        <th scope="col">จำนวนคืน</th>
-                        <th scope="col">ราคารวม</th>
-                        <th scope="col">สถานะ</th>
+                        <th scope="col" class="text-center">วันที่จอง</th>
+                        <th scope="col" class="text-center">วันที่เช็คอิน</th>
+                        <th scope="col" class="text-center">วันที่เช็คเอาท์</th>
+                        <th scope="col" class="text-center">จำนวนคืน</th>
+                        <th scope="col" class="text-center">ราคารวม</th>
+                        <th scope="col" class="text-center">สถานะ</th>
+                        <th scope="col" class="text-center">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     <?php foreach ($bookings as $booking): ?>
                         <tr>
-                            <td><?= htmlspecialchars($booking['bookingId']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($booking['bookingId']) ?></td>
                             <td><?= htmlspecialchars($booking['roomName']) ?></td>
                             <td><?= htmlspecialchars($booking['userName']) ?></td>
-                            <td><?= htmlspecialchars($booking['bookingDate']) ?></td>
-                            <td><?= htmlspecialchars($booking['checkIn']) ?></td>
-                            <td><?= htmlspecialchars($booking['checkOut']) ?></td>
-                            <td><?= htmlspecialchars($booking['totalNights']) ?></td>
-                            <td><?= number_format((float)$booking['totalPrice'], 2) ?></td>
-                            <td>
-                                <?php 
-                                    if ($booking['status'] === 'upcoming') {
-                                        echo '<span class="badge bg-info text-dark">ยังไม่ถึงวันเข้าพัก</span>';
-                                    } elseif ($booking['status'] === 'in_stay') {
-                                        echo '<span class="badge bg-success">กำลังเข้าพัก</span>';
-                                    } else {
-                                        echo '<span class="badge bg-danger">เช็คเอาท์แล้ว</span>';
-                                    }
+                            <td class="text-center"><?= htmlspecialchars($booking['bookingDate']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($booking['checkIn']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($booking['checkOut']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($booking['totalNights']) ?></td>
+                            <td class="text-end"><?= number_format((float)$booking['totalPrice'], 2) ?></td>
+                            <td class="text-center">
+                                <?php
+                                if ($booking['status'] === 'upcoming') {
+                                    echo '<span class="badge bg-info text-dark"> ยังไม่เข้าพัก</span>';
+                                } elseif ($booking['status'] === 'staying') {
+                                    echo '<span class="badge bg-success"> กำลังเข้าพัก</span>';
+                                } elseif ($booking['status'] === 'checked_out') {
+                                    echo '<span class="badge bg-secondary"> เช็คเอาท์แล้ว</span>';
+                                } else {
+                                    echo '<span class="badge bg-warning text-dark">ไม่ทราบสถานะ</span>';
+                                }
                                 ?>
+                            </td>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="bookingId" value="<?= htmlspecialchars($booking['bookingId']) ?>">
+                                    <button type="submit" class="btn btn-warning btn-sm" name="action" value="edit">แก้ไข</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" name="action" value="delete" onclick="return confirm('ยืนยันที่จะลบการจองนี้?');">ลบ</button>
+
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-
-
                 </tbody>
             </table>
         <?php else: ?>

@@ -24,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
-<h2>แก้ไขบริการ RoomId <?php echo htmlspecialchars($room[0]['roomId']); ?> : <?php echo htmlspecialchars($room[0]['roomName']); ?></h2>
 <form id="servicesForm" action="editRoom.php?roomId=<?php echo (int)$room[0]['roomId']; ?>" method="POST">
     <input type="hidden" name="action" value="update_services">
 
@@ -51,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </td>
                         <td class="align-middle text-center">
                             <!-- ปุ่มลบเรียก JS ใส่ hidden แล้ว submit ฟอร์มหลัก -->
-                            <button type="button" class="btn btn-danger btn-sm"
+                            <button type="button" class="btn btn-danger btn"
                                 onclick="submitDelete(<?php echo (int)$service['serviceId']; ?>, '<?php echo addslashes($service['serviceName']); ?>')">
                                 ลบ
                             </button>
@@ -70,15 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <tr>
-                <td colspan="2">
-                    <button type="button" class="btn btn-outline-primary" onclick="addServiceRow(this)">+ เพิ่มบริการ</button>
+                <td colspan="2" class="d-flex gap-3 justify-content-start">
+                    <button type="button" class="btn btn-success" onclick="addServiceRow(this)">+ เพิ่มบริการ</button>
+                    <button class="btn btn-primary" type="submit" onclick="return confirm('แน่ใจหรือไม่ว่าจะบันทึกบริการนี้?');">บันทึกบริการ</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
     <!-- ปุ่มบันทึกต้องส่ง action=update_services -->
-    <button class="btn btn-primary" type="submit" onclick="return confirm('แน่ใจหรือไม่ว่าจะบันทึกบริการนี้?');">บันทึกบริการ</button>
 </form>
 
 <script>

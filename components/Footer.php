@@ -14,11 +14,11 @@
 <body>
     <footer class="" style="background-color: <?php echo $hotelTheme['colorSecondary']; ?>;" id="contact">
         <div class="container py-5">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center text-white">
                 <p class="mb-0">&copy; <?php echo date("Y"); ?> <?php echo $hotelTheme['hotelName']; ?>. All rights reserved.</p>
-                <ul class="list-unstyled d-flex mb-0">
-                    <li class="ms-3"><a href="" class="<?php echo $line_animation_CSS; ?>">Privacy Policy</a></li>
-                    <li class="ms-3"><a href="" class="<?php echo $line_animation_CSS; ?>">Terms of Service</a></li>
+                <ul class="list-unstyled d-flex mb-0 ">
+                    <li class="ms-3"><a href="" class="text-white <?php echo $line_animation_CSS; ?>">Privacy Policy</a></li>
+                    <li class="ms-3"><a href="" class="text-white <?php echo $line_animation_CSS; ?>">Terms of Service</a></li>
                 </ul>
             </div>
         </div>

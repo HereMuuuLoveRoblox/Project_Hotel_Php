@@ -14,6 +14,8 @@
 
     include '../functions/CRUDbooking.php';
 
+    include '../functions/getbookings.php';
+
     $nights = 0;
     $total_price = 0;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,6 +26,23 @@
             $date2 = new DateTime($checkout);
             $interval = $date1->diff($date2);
             $nights = $interval->days;
+
+            $tz = new DateTimeZone('Asia/Bangkok');
+            $today = new DateTime('today', $tz);
+
+            $d1 = DateTime::createFromFormat('Y-m-d', $checkin ?? '', $tz);
+            $d2 = DateTime::createFromFormat('Y-m-d', $checkout ?? '', $tz);
+
+            if (!$d1 || !$d2) {
+                echo "<script>alert('รูปแบบวันที่ไม่ถูกต้อง'); window.location.href = 'rooms.php';</script>";
+                exit();
+            } elseif ($d1 < $today) {
+                echo "<script>alert('ห้ามจองย้อนหลัง'); window.location.href = 'rooms.php';</script>";
+                exit();
+            } elseif ($d2 <= $d1) {
+                echo "<script>alert('วันเช็กเอาต์ต้องหลังวันเช็กอิน'); window.location.href = 'rooms.php';</script>";
+                exit();
+            }
         }else{
             echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน นะนะะนะน'); window.location.href = 'rooms.php';</script>";
             exit();
@@ -87,22 +106,31 @@
                     <?php endif; ?>
                 </ul>
                 <h3 class="d-flex justify-content-center align-items-center mt-4" style="font-size: 1.5rem; font-weight: bold; color: green;">THB <?php echo number_format((float)$room[0]['roomPrice'], 2); ?> / คืน</h3>
-                
-                <form method="post" action="">
-                    <div class="mb-3">
-                        <label>วันที่เริ่มเข้าพัก (Check-in)</label>
-                        <input type="date" name="checkin" class="form-control"
-                            value="<?php echo $_POST['checkin'] ?? ''; ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>วันสุดท้าย (Check-out)</label>
-                        <input type="date" name="checkout" class="form-control"
-                            value="<?php echo $_POST['checkout'] ?? ''; ?>" required>
-                    </div>
-                    <div class="d-flex flex-column gap-2">
-                        <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="width: 100%; background-color: <?php echo $hotelTheme['colorPrimary']; ?>; color: white;">จองห้องพัก</button>
-                    </div>
-                </form>
+                <p class="text-center">จำนวนห้องที่ว่าง: <?php echo htmlspecialchars(getRoomAvailableCount($conn, (int)$room[0]['roomId'])); ?> / <?php echo htmlspecialchars((int)$room[0]['roomCount']); ?></p>
+
+                <?php
+                    if (getRoomAvailableCount($conn, (int)$room[0]['roomId']) > 0): ?>
+
+                    <form method="post" action="">
+                        <div class="mb-3">
+                            <label>วันที่เริ่มเข้าพัก (Check-in)</label>
+                            <input type="date" name="checkin" class="form-control"
+                                value="<?php echo $_POST['checkin'] ?? ''; ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>วันสุดท้าย (Check-out)</label>
+                            <input type="date" name="checkout" class="form-control"
+                                value="<?php echo $_POST['checkout'] ?? ''; ?>" required>
+                        </div>
+                        <div class="d-flex flex-column gap-2">
+                            <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="width: 100%; background-color: <?php echo $hotelTheme['colorPrimary']; ?>; color: white;">จองห้องพัก</button>
+                        </div>
+                    </form>
+                <?php
+                    else:
+                        echo "<p class='text-danger text-center'>ขออภัย ห้องพักนี้เต็มแล้ว</p>";
+                    endif;
+                ?>
             </div>
         </div>
     </div>

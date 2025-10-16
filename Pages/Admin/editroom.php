@@ -57,6 +57,10 @@
 
     <!-- Main Content -->
     <div class="container" id="manage-rooms">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h2>แก้ไขข้อมูลเบื้องต้น RoomId <?php echo htmlspecialchars($room[0]['roomId']); ?> : <?php echo htmlspecialchars($room[0]['roomName']); ?></h2>
+            <a href="manageRooms.php" class="btn btn-outline-danger">กลับ</a>
+        </div>
         <?php include '../../components/FormUpdateRoom.php'; ?>
         <hr>
         <?php include '../../components/FormUpdateService.php'; ?>

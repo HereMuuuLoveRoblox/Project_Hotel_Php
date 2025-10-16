@@ -1,7 +1,7 @@
 <?php
     
     function getHotelTheme($conn) {
-        $stmt = $conn->prepare("SELECT hotelName, colorPrimary, colorSecondary
+        $stmt = $conn->prepare("SELECT themeId, hotelName, colorPrimary, colorSecondary
                             FROM hotelTheme
                             WHERE themeId = 1");
 

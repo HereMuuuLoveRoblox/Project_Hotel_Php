@@ -26,6 +26,8 @@
         }
         return $text;
     }
+
+    include '../functions/getbookings.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,20 +38,6 @@
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <style>
-        /* Custom styles for the homepage */
-        .room-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .room-card:hover {
-            transform: scale(1.01);
-            z-index: 10; /* ป้องกันบังกันเวลาขยาย */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-    </style>
 </head>
 <body>
     <!-- Nav -->

@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $roomId > 0) {
                 <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="add_images">
                     <div class="input-group" id="add-image-group">
-                        <button type="submit" class="btn btn-outline-primary">+ เพิ่มรูปใหม่</button>
+                        <button type="submit" class="btn btn-success">+ เพิ่มรูปใหม่</button>
                     </div>
                 </form>
             </td>

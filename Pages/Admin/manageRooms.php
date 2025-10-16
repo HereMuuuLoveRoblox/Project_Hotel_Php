@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($action === 'create_room') {
         CreateRoom($conn, "New Room", "Room Detail", 0);
-        echo "<script>window.location.href = 'manageRooms.php';</script>";
+        header('Location: manageRooms.php#newroom');
         exit();
     }
     
@@ -73,7 +73,14 @@ function limitCharacters($text, $limit) {
     <!-- End Navbar -->
     <!-- Main Content -->
     <div class="container" id="manage-rooms">
-        <table class="table table-hover border-top-color table-light table-bordered" style="table-layout:fixed; width:100%;">
+        
+        <form action="" method="post" class="text-end my-3">
+            <input type="hidden" name="action" value="create_room">
+            <a href="dashboard.php" class="btn btn-outline-danger">กลับ</a>
+            <button type="submit" class="btn btn-success">+ เพิ่มห้องใหม่</button>
+        </form>
+                    
+        <table class="table table-bordered table-hover table-striped rounded shadow-sm table-light" style="table-layout:fixed; width:100%;">
             <colgroup>
                 <col style="width:80px;"> <!-- roomId -->
                 <col style="width:150px;"> <!-- รูปภาพหลัก -->
@@ -104,7 +111,7 @@ function limitCharacters($text, $limit) {
                                 <?php echo htmlspecialchars(limitCharacters($room['roomDetail'], 100)); ?>
                             </td>
                             <td class="align-middle h4 text-center"><?php echo htmlspecialchars($room['roomPrice']); ?></td>
-                            <td class="align-middle text-center"><a href="editRoom.php?roomId=<?php echo $room['roomId']; ?>" class="btn btn-primary">แก้ไข</a></td>
+                            <td class="align-middle text-center"><a href="editRoom.php?roomId=<?php echo $room['roomId']; ?>" class="btn btn-warning">แก้ไข</a></td>
 
                             <form action="" method="POST" onsubmit="return confirm('ยืนยันลบห้องนี้? : <?php echo addslashes($room['roomName']); ?>')">
                                 <input type="hidden" name="action" value="delete_room">
@@ -119,18 +126,9 @@ function limitCharacters($text, $limit) {
                     </tr>
                 <?php endif; ?>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="7" class="text-center">
-                        <form action="" method="post">
-                            <input type="hidden" name="action" value="create_room">
-                            <button type="submit" class="btn btn-outline-primary">+ เพิ่มห้องใหม่</button>
-                        </form>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     </div>
+    <section id="newroom"></section>
 
     <!-- Footer -->
     <?php include '../../components/Footer.php'; ?>

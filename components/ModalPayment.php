@@ -15,7 +15,7 @@
 
             CreateBooking($conn, $userId, $roomId, $checkin, $checkout, $totalNight, $totalPrice);
             
-            echo "<script>window.location.href = 'homepage.php';</script>";
+            echo "<script>window.location.href = 'BookingHistory.php';</script>";
             exit();
         }
     }

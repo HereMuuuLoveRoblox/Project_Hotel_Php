@@ -4,7 +4,7 @@
     function getAllRoomsAndImagesShow($conn)
     {   
         // ถ้าไม่พบ (NULL) → จะดึงรูปแรก (ORDER BY rimgId ASC LIMIT 1) แทน
-        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice,
+        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice, rooms.roomCount,
                                 IFNULL(
                                         ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId AND roomsimages.rimgShow = 1 LIMIT 1 ),
                                         ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId ORDER BY roomsimages.rimgId ASC LIMIT 1 ) 
@@ -20,7 +20,7 @@
     function getLIMITRoomsAndImagesShow($conn, $limit)
     {   
         // ถ้าไม่พบ (NULL) → จะดึงรูปแรก (ORDER BY rimgId ASC LIMIT 1) แทน
-        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice,
+        $stmt = $conn->prepare("SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice, rooms.roomCount,
                                 IFNULL(
                                         ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId AND roomsimages.rimgShow = 1 LIMIT 1 ),
                                         ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId ORDER BY roomsimages.rimgId ASC LIMIT 1 ) 
@@ -35,7 +35,7 @@
     }
 
     function getRoomById($conn, $roomId) {
-        $stmt = $conn->prepare(" SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice,
+        $stmt = $conn->prepare(" SELECT rooms.roomId, rooms.roomName, rooms.roomDetail, rooms.roomPrice, rooms.roomCount,
                                 IFNULL(
                                     ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId AND roomsimages.rimgShow = 1 LIMIT 1),
                                     ( SELECT roomsimages.rimgPath FROM roomsimages WHERE roomsimages.roomId = rooms.roomId ORDER BY roomsimages.rimgId ASC LIMIT 1)
@@ -78,4 +78,15 @@
         $stmt->execute();
         return $conn->lastInsertId(); // คืนค่า roomId ที่เพิ่งสร้าง
     }
+
+    function getRoomAvailableCount($conn, $roomId){
+        
+        $room = getRoomById($conn, $roomId);
+        if (!$room) return 0;
+
+        $used = countActiveBookingsForRoomById($conn, (int)$roomId);
+        $available = max(0, (int)$room[0]['roomCount'] - $used);
+        return $available;
+    }
+    
 ?>

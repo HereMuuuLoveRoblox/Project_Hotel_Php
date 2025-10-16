@@ -1,11 +1,12 @@
 <?php
 
-    function editRoom($conn, $roomId, $roomName, $roomDetail, $roomPrice)
+    function editRoom($conn, $roomId, $roomName, $roomDetail, $roomPrice, $roomCount)
     {
-        $stmt = $conn->prepare("UPDATE rooms SET roomName = :roomName, roomDetail = :roomDetail, roomPrice = :roomPrice WHERE roomId = :roomId");
+        $stmt = $conn->prepare("UPDATE rooms SET roomName = :roomName, roomDetail = :roomDetail, roomPrice = :roomPrice, roomCount = :roomCount WHERE roomId = :roomId");
         $stmt->bindParam(':roomName', $roomName);
         $stmt->bindParam(':roomDetail', $roomDetail);
         $stmt->bindParam(':roomPrice', $roomPrice);
+        $stmt->bindParam(':roomCount', $roomCount);
         $stmt->bindParam(':roomId', $roomId);
         return $stmt->execute();
     }

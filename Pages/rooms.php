@@ -21,6 +21,8 @@
     include '../functions/getRooms.php';
     $rooms = getAllRoomsAndImagesShow($conn);
 
+    include '../functions/getBookings.php';
+
     function limitCharacters($text, $limit) {
         if (mb_strlen($text, 'UTF-8') > $limit) {
             return mb_substr($text, 0, $limit, 'UTF-8') . '...'; // ตัดข้อความและใส่ ...
@@ -37,19 +39,6 @@
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <style>
-        /* Custom styles for the homepage */
-        .room-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .room-card:hover {
-            transform: scale(1.01);
-            z-index: 10; /* ป้องกันบังกันเวลาขยาย */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-    </style>
 </head>
 <body>
     <!-- Nav -->
@@ -65,7 +54,7 @@
                 <h1 style="font-size: 3rem; font-weight: bold; color: #000000;">ห้องที่ใช่</h1>
                 <h1 style="font-size: 3rem; font-weight: bold; color: <?php echo $hotelTheme['colorPrimary']; ?>;">คือห้องที่ชอบ</h1>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatibus vel aspernatur vitae odit quia.</p>
+            <p>เราตั้งใจคัดทุกรายละเอียดให้พอดีกับไลฟ์สไตล์ของคุณ ทั้งแสงสวย ๆ หมอนนุ่มกำลังดี มุมทำงานสงบ และห้องน้ำสะอาดสะอ้าน ให้การพักครั้งนี้รู้สึก “ใช่” ตั้งแต่เปิดประตู</p>
         </div>
         <?php include '../components/RoomCard.php';?>
     </main>
